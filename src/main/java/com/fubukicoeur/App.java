@@ -43,7 +43,7 @@ public class App {
 
             // Menu bar
             JMenuBar menuBar = new JMenuBar();
-            JMenu settingsMenu = new JMenu("Settings");
+            JMenu settingsMenu = new JMenu("Token");
             JMenuItem tokenItem = new JMenuItem("Register API Token");
             settingsMenu.add(tokenItem);
             menuBar.add(settingsMenu);
