@@ -17,14 +17,14 @@ public class MatchInfo {
     /**
      * Constructs a MatchInfo object with the specified parameters.
      *
-     * @param round             The round of the match.
-     * @param player1Tag        The tag of player 1.
-     * @param player2Tag        The tag of player 2.
+     * @param round The round of the match.
+     * @param player1Tag The tag of player 1.
+     * @param player2Tag The tag of player 2.
      * @param player1Characters The characters used by player 1.
      * @param player2Characters The characters used by player 2.
-     * @param multiplePhases    Indicates if the event has multiple phases.
-     * @param entrants          The number of entrants in the phase.
-     * @param isFirstPhase      Indicates if this is the first phase of the event.
+     * @param multiplePhases Indicates if the event has multiple phases.
+     * @param entrants The number of entrants in the phase.
+     * @param isFirstPhase Indicates if this is the first phase of the event.
      */
     public MatchInfo(String round, String player1Tag, String player2Tag,
             Set<String> player1Characters, Set<String> player2Characters, boolean multiplePhases, int entrants,
