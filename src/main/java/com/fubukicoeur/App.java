@@ -3,7 +3,7 @@ package com.fubukicoeur;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Image;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -31,7 +31,7 @@ import javax.swing.SwingUtilities;
 public class App {
 
     private static final String TOKEN_FILE = "token.txt";
-    private static final String IMAGE_PATH = "assets/guide.png"; 
+    private static final String IMAGE_PATH = "src\\main\\resources\\guide.png";
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -43,10 +43,26 @@ public class App {
 
             // Menu bar
             JMenuBar menuBar = new JMenuBar();
-            JMenu settingsMenu = new JMenu("Token");
+            JMenu tokenMenu = new JMenu("Token");
+            try {
+                Font codeNextFont = Font.createFont(Font.TRUETYPE_FONT,
+                        new File("src\\main\\resources\\CodeNext-ExtraBold.ttf"));
+                codeNextFont = codeNextFont.deriveFont(Font.PLAIN, 12f);
+                tokenMenu.setFont(codeNextFont);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             JMenuItem tokenItem = new JMenuItem("Register API Token");
-            settingsMenu.add(tokenItem);
-            menuBar.add(settingsMenu);
+            try {
+                Font codeNextFont = Font.createFont(Font.TRUETYPE_FONT,
+                        new File("src\\main\\resources\\CodeNext-ExtraBold.ttf"));
+                codeNextFont = codeNextFont.deriveFont(Font.PLAIN, 12f);
+                tokenItem.setFont(codeNextFont);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tokenMenu.add(tokenItem);
+            menuBar.add(tokenMenu);
             frame.setJMenuBar(menuBar);
 
             // Center panel with vertical BoxLayout
@@ -55,21 +71,23 @@ public class App {
             centerPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
             centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            // Image label (bigger)
-            JLabel imageLabel = new JLabel();
-            try {
-                ImageIcon icon = new ImageIcon(IMAGE_PATH);
-                Image scaled = icon.getImage().getScaledInstance(500, -1, Image.SCALE_SMOOTH);
-                imageLabel.setIcon(new ImageIcon(scaled));
-            } catch (Exception ex) {
-                imageLabel.setText("Image not found: " + IMAGE_PATH);
-            }
-            imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            centerPanel.add(imageLabel);
-            centerPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+            // Image panel
+            ImagePanel guidePanel = new ImagePanel();
+            guidePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            centerPanel.add(guidePanel);
+            centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            guidePanel.setImage(new ImageIcon(IMAGE_PATH).getImage());
 
             // Event Slug label
             JLabel slugLabel = new JLabel("Event Slug:");
+            try {
+                Font codeNextFont = Font.createFont(Font.TRUETYPE_FONT,
+                        new File("src\\main\\resources\\CodeNext-ExtraBold.ttf"));
+                codeNextFont = codeNextFont.deriveFont(Font.PLAIN, 12f);
+                slugLabel.setFont(codeNextFont);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             slugLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             centerPanel.add(slugLabel);
             centerPanel.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -82,26 +100,54 @@ public class App {
             centerPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 
             // Event label
-            JLabel eventLabel = new JLabel("Event name (use a reduced version for YouTube 100 characters limit):");
+            JLabel eventLabel = new JLabel("Event name:");
+            JLabel eventLabel2 = new JLabel("(use a reduced version for YouTube 100 characters limit)");
+            try {
+                Font codeNextFont = Font.createFont(Font.TRUETYPE_FONT,
+                        new File("src\\main\\resources\\CodeNext-ExtraBold.ttf"));
+                codeNextFont = codeNextFont.deriveFont(Font.PLAIN, 12f);
+                eventLabel.setFont(codeNextFont);
+                eventLabel2.setFont(codeNextFont);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             eventLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            eventLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
             centerPanel.add(eventLabel);
+            centerPanel.add(eventLabel2);
             centerPanel.add(Box.createRigidArea(new Dimension(0, 5)));
 
             // Event name input
             JTextField eventField = new JTextField(30);
-            eventField.setMaximumSize(new Dimension(400, eventField.getPreferredSize().height));
+            eventField.setMaximumSize(new Dimension(150, eventField.getPreferredSize().height));
             eventField.setAlignmentX(Component.CENTER_ALIGNMENT);
             centerPanel.add(eventField);
             centerPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 
-            // Progress label (initially hidden)
+            // Progress label
             JLabel progressLabel = new JLabel(" ");
+            try {
+                Font codeNextFont = Font.createFont(Font.TRUETYPE_FONT,
+                        new File("src\\main\\resources\\CodeNext-ExtraBold.ttf"));
+                codeNextFont = codeNextFont.deriveFont(Font.PLAIN, 12f);
+                progressLabel.setFont(codeNextFont);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             progressLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             centerPanel.add(progressLabel);
             centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
             // Generate button
             JButton generateButton = new JButton("Generate");
+            try {
+                Font codeNextFont = Font.createFont(Font.TRUETYPE_FONT,
+                        new File("src\\main\\resources\\CodeNext-ExtraBold.ttf"));
+                codeNextFont = codeNextFont.deriveFont(Font.PLAIN, 12f);
+                generateButton.setFont(codeNextFont);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             generateButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             centerPanel.add(generateButton);
 
@@ -143,7 +189,8 @@ public class App {
                         // Create a progress callback to update the UI
                         ProgressCallback progressCallback = (currentPage, totalPages, eventSlug) -> {
                             SwingUtilities.invokeLater(() -> {
-                                progressLabel.setText("Fetching page " + currentPage + "/" + totalPages + " of sets for event: " + eventSlug);
+                                progressLabel.setText("Fetching page " + currentPage + "/" + totalPages
+                                        + " of sets for event: " + eventSlug);
                             });
                         };
 
@@ -158,7 +205,8 @@ public class App {
                         writeMatchesToFile(matches, eventName, "sets.txt");
 
                         SwingUtilities.invokeLater(() -> {
-                            JOptionPane.showMessageDialog(frame, "sets.txt file generated successfully in app folder", "Success",
+                            JOptionPane.showMessageDialog(frame, "sets.txt file generated successfully in app folder",
+                                    "Success",
                                     JOptionPane.INFORMATION_MESSAGE);
                             generateButton.setEnabled(true);
                             generateButton.setText("Generate");
@@ -180,15 +228,17 @@ public class App {
             frame.setVisible(true);
         });
     }
-    
+
     /**
      * Writes match information to a text file
-     * @param matches List of MatchInfo objects to write
+     * 
+     * @param matches   List of MatchInfo objects to write
      * @param eventName The name of the event to prepend to each match
-     * @param filename The name of the file to write to
+     * @param filename  The name of the file to write to
      * @throws IOException if there's an error writing to the file
      */
-    private static void writeMatchesToFile(List<MatchInfo> matches, String eventName, String filename) throws IOException {
+    private static void writeMatchesToFile(List<MatchInfo> matches, String eventName, String filename)
+            throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (MatchInfo match : matches) {
                 writer.write(eventName + " - " + match.toString());
